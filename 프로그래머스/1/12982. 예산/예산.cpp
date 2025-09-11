@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -9,6 +10,8 @@ int solution(vector<int> d, int budget) {
     int answer = 0;
     
     //정렬하고, 앞에서부터 더한다음에, budget보다 크면 이전값을 넘김
+    sort(d.begin(),d.end()); //내림차순 하려면? sort(d.begin(),d.end(),greater<int>());
+    /*
     //1. 정렬 (수동 구현)
     for(int i=0; i<d.size() -1; i++)
     {
@@ -22,6 +25,7 @@ int solution(vector<int> d, int budget) {
             }
         }
     }
+    */
     int sum = 0;
     for(int i=0; i< d.size(); i++)
     {   
@@ -29,7 +33,5 @@ int solution(vector<int> d, int budget) {
         sum += d[i];
         answer++;
     }
-    
-    
     return answer;
 }
