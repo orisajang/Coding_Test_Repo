@@ -14,6 +14,11 @@ int gcd(int a, int b)
     return a;
 }
 
+int lcm(int a, int b)
+{
+    return a /gcd(a,b) * b ; 
+}
+
 vector<int> solution(int n, int m) {
     vector<int> answer;
     
@@ -21,6 +26,10 @@ vector<int> solution(int n, int m) {
     int numberGcd = gcd(n,m);
     answer.push_back(numberGcd);
     //최소공배수
+    int gongBasu = lcm(n,m);
+    answer.push_back(gongBasu);
+    //함수 안쓰고 직접구현
+    /*
     int max = n > m ? n:m;
     int limit = n*m;
     int gongBasu = 0;
@@ -33,5 +42,6 @@ vector<int> solution(int n, int m) {
             break;
         }
     }
+    */
     return answer;
 }
