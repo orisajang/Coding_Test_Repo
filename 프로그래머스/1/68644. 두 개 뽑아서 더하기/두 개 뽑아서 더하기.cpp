@@ -17,6 +17,10 @@ vector<int> solution(vector<int> numbers) {
         }
     }
     sort(sumArray.begin(),sumArray.end());
+    /*
+    sumArray.erase(unique(sumArray.begin(),sumArray.end()),sumArray.end());
+    answer = sumArray;
+    */
     
     for(int i=0; i< sumArray.size(); i++)
     {
@@ -29,7 +33,6 @@ vector<int> solution(vector<int> numbers) {
             answer.push_back(sumArray[i]);
         }
     }
-    
     
     return answer;
 }
