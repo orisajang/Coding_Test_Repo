@@ -16,7 +16,7 @@ int solution(vector<vector<int>> sizes) {
         maxW = max(maxW,currentW);
         maxH = max(maxH,currentH);
     }
-    answer = maxW * maxH;
     
+    answer = maxW * maxH;
     return answer;
 }
