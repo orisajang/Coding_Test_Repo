@@ -14,27 +14,19 @@ int main()
     if (sum != 180) cout << "Error";
     else
     {
-        map<int, int> map;
-        int arraySize = sizeof(angle) / sizeof(angle[0]);
-        for (int i = 0; i < arraySize; i++)
+        int maxCount = 0;
+        for(int i=0; i<3; i++)
         {
-            map[angle[i]]++;
-        }
-        bool bFind = false;
-        for (auto i : map)
-        {
-            if (i.second == 3)
+            int count = 0;
+            for(int j=0; j<3; j++)
             {
-                cout << "Equilateral";
-                bFind = true;
+                if(angle[i]==angle[j]) count++;
             }
-            else if (i.second == 2)
-            {
-                cout << "Isosceles";
-                bFind = true;
-            }
+            if(maxCount < count) maxCount = count;
         }
-        if (!bFind) cout << "Scalene";
+        if(maxCount ==3) cout << "Equilateral";
+        else if(maxCount ==2) cout << "Isosceles";
+        else cout << "Scalene";
     }
     
     
