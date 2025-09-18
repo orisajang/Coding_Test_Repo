@@ -12,6 +12,8 @@ int absFunc(int num)
 
 int solution(vector<int> array, int n) {
     int answer = 0;
+
+    sort(array.begin(),array.end());
     
     int min = absFunc(array[0] - n);
     int minIndex = 0;
@@ -23,14 +25,6 @@ int solution(vector<int> array, int n) {
         {
             min = subValue;
             minIndex = i;
-        }
-        else if(subValue == min)
-        {
-            if(array[minIndex] > array[i])
-            {
-                min = subValue;
-                minIndex = i;
-            }
         }
     }
     answer = array[minIndex];
