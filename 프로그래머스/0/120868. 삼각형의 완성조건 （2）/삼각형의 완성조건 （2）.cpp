@@ -1,36 +1,33 @@
 #include <string>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
-int findMax(int a, int b)
-{
-    return (a > b) ? a : b;
-}
-
 int solution(vector<int> sides) {
     int answer = 0;
-    //for문으로 1부터 돌리고 3개의 값중에서 max 찾고 index지정, 나머지2개를 더하고 넘는지 확인
-    int length = sides[0] + sides[1];
-    for(int i=1; i<= length; i++)
-    {
-        vector<int> vec;
-        vec.push_back(sides[0]);
-        vec.push_back(sides[1]);
-        vec.push_back(i);
-        int max = findMax(findMax(sides[0],sides[1]),i);
-        bool isFindMax = false;
-        int sum = 0;
-        for(int j=0; j<vec.size(); j++)
-        {
-            if(isFindMax == false && vec[j] == max){
-                isFindMax = true;
-                continue;
-            }
-            sum += vec[j];
-        }
-        if(sum > max) answer++;
-    }
+    //삼각형의 세변의 길이는 두변의 합이 나머지보다 커야함
+    //두변이 주어졌을때 c가 될 수 있는 정수의 개수
+    //1) c가 가장크다면?
+    //a+b > c , c가 될수있는 최대값은 (a+b-1)
+    //2) c가 가장 큰값이 아니라면?
+    //a+c > b, c > b-a
+    //b+c > a, c > a-b
+    //a가 큰경우와 b가 큰경우가 존재, 즉
+    //c가 b-a일수도있고, a-b일수도 있기때문에 절대값을 씌워줌
+    //c > |a-b|, c가 될수있는 최대값은 |a-b|+1;
+    //즉 c의 범위는?
+    //|a-b|+1 <= c <=(a+b-1) 
+    //정수 갯수는? (최대값+1 - 최소값)
+    //((a+b-1) +1) - (|a-b|+1)  ; //+1은 정수끝부분 포함해야해서
+    
+    int a = sides[0];
+    int b = sides[1];
+    int minVal = abs(a-b)+1;
+    int maxVal = a+b -1;
+    
+    answer = (maxVal - minVal) +1;
+    
     
     return answer;
 }
