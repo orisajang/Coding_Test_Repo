@@ -39,12 +39,7 @@ public class Solution {
             }
         }
         //answer 배열 형식에 맞게 추가
-        int[] answer = new int[array.Count];
-        for(int i=0; i<array.Count; i++)
-        {
-            answer[i] = array[i];
-        }
-        
+        int[] answer = array.ToArray();
         return answer;
     }
 }
