@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+//using System.Linq;
 
 public class Solution {
     public string solution(string s, string skip, int index) {
@@ -18,15 +18,8 @@ public class Solution {
         for(int i=0; i<s.Length; i++)
         {
             char ch = s[i];
-            int charIndex = 0;
-            for(int j=0; j<listCount; j++) //ch의 Index찾기 (charArray에서)
-            {
-                if(ch == listArray[j]) 
-                {
-                    charIndex = j;
-                    break;
-                }
-            }
+            //ch의 Index찾기 (charArray에서)
+            int charIndex = listArray.IndexOf(ch);
             int chIndex = (charIndex + index) % listCount;
             answer += listArray[chIndex];
         }
