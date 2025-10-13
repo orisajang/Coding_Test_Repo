@@ -6,7 +6,7 @@ public class Solution {
     public string solution(string s, string skip, int index) {
         string answer = "";
         //List로 확인
-        //skip에 포함되는 알파벳은 s에 포함되지않음 ㅋ
+        //skip에 포함되는 알파벳은 s에 포함되지않음
         List<char> listArray = new List<char>();
         for(int i=0; i< 26; i++)
         {
@@ -29,10 +29,7 @@ public class Solution {
             }
             int chIndex = (charIndex + index) % listCount;
             answer += listArray[chIndex];
-            //Console.WriteLine(chIndex);
         }
-        
-        
         return answer;
     }
 }
