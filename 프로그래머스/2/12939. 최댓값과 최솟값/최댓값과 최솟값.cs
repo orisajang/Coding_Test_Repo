@@ -1,20 +1,21 @@
+
 using System;
 using System.Collections.Generic;
 public class Solution {
-    
-	int FindMax(int a, int b)
-	{
-		return (a>b) ? a : b; 
-	}
-	int FindMin(int a, int b)
-	{
-		return (a<b) ? a : b; 
-	}
+
+    int FindMax(int a, int b)
+    {
+        return (a>b) ? a : b; 
+    }
+    int FindMin(int a, int b)
+    {
+        return (a<b) ? a : b; 
+    }
     public string solution(string s) 
     {
         string answer = "";
-        
-	    List<int> numList = new List<int>(); 
+
+        List<int> numList = new List<int>(); 
         string str = "";    //stringBuilder로 바꿔보기
         for(int i=0; i<s.Length; i++)
         {
@@ -43,7 +44,7 @@ public class Solution {
             min = FindMin(min, numList[i]);
         }
         answer = min + " " + max;
-        
+
         return answer;
     }
 }
