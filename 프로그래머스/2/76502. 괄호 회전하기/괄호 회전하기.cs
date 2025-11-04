@@ -37,10 +37,10 @@ public class Solution {
                         break;
                     }
                     char popCh = st.Pop();
-                    if(popCh == '(' && c == ')'){}
-                    else if(popCh == '{' && c == '}'){}
-                    else if(popCh == '[' && c == ']'){}
-                    else
+                    
+                    if(!((popCh == '(' && c == ')') ||
+                         (popCh == '{' && c == '}') ||
+                         (popCh == '[' && c == ']')))
                     {
                         isCorrect = false;
                         break;
