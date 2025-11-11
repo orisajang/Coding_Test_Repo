@@ -1,5 +1,5 @@
 using System;
-
+using System.Text;
 public class Solution {
     
     private char UnderToUpper(char ch)
@@ -23,6 +23,7 @@ public class Solution {
     
     public string solution(string s) {
         string answer = "";
+        StringBuilder sb = new StringBuilder();
         //짝수번째는 대문자, 홀수번째는 소문자로 만들어야함
         int count = 0;
         for(int i=0; i< s.Length; i++)
@@ -30,20 +31,21 @@ public class Solution {
             if(s[i] == ' ') 
             {
                 count = 0;
-                answer += " ";
+                sb.Append(" ");
                 continue;
             }
             if(count % 2 == 0)
             {
-                answer += UnderToUpper(s[i]);
+                sb.Append(UnderToUpper(s[i]));
             }
             else
             {
-                answer += UpperToUnder(s[i]);
+                sb.Append(UpperToUnder(s[i]));
             }
             count++;
         }
         
+        answer = sb.ToString();
         return answer;
     }
 }
