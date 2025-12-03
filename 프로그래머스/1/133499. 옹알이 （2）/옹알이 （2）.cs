@@ -26,13 +26,16 @@ public class Solution {
                     if(currentWord.StartsWith(words[j]) &&
                       beforeWord != words[j])
                     {
-                        //Concat있는거같은데 그냥 for문으로 문자열 잘라보자
+                        //Substring있는거같은데 그냥 for문으로 문자열 잘라보자
                         string buf = "";
                         beforeWord = words[j];
+                        buf = currentWord.Substring(words[j].Length);
+                        /*
                         for(int x= words[j].Length; x < currentWord.Length; x++)
                         {
                             buf += currentWord[x];
                         }
+                        */
                         currentWord = buf;
                         break;
                     }
