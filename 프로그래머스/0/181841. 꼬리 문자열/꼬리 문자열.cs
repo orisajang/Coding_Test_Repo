@@ -4,6 +4,15 @@ using System.Text;
 public class Solution {
     public string solution(string[] str_list, string ex) {
         string answer = "";
+        for(int i=0; i<str_list.Length; i++)
+        {
+            string str = str_list[i];
+            if(!str.Contains(ex))
+            {
+                answer += str;
+            }
+        }
+        /*
         StringBuilder sb = new StringBuilder();
         int exLength = ex.Length;
         for(int i=0; i< str_list.Length; i++)
@@ -34,7 +43,7 @@ public class Solution {
         }
         
         answer = sb.ToString();
-        
+        */
         return answer;
     }
 }
