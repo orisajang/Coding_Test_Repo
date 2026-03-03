@@ -10,6 +10,13 @@ namespace baek24479
         static int answerIndex = 1;
         public static void dfs(List<int>[] data , int startNum)
         {
+            //자신 처리
+            if(!isVisited[startNum])
+            {
+                isVisited[startNum] = true;
+                answer[startNum] = answerIndex++;
+            }
+            //다음 노드 처리
             for(int i=0; i< data[startNum].Count; i++)
             {
                 int num = data[startNum][i];
@@ -49,10 +56,6 @@ namespace baek24479
             //이제 결과값을 출력. 시작점에서부터 방문한노드 체크하면서 진행
             isVisited = new bool[inputArray[0]+1];
             answer = new int[inputArray[0]+1];
-            //시작노드 방문처리
-            answer[inputArray[2]] = 1;
-            answerIndex++;
-            isVisited[inputArray[2]] = true;
             //dfs처리
             dfs(graphList,inputArray[2]);
             StringBuilder sb = new StringBuilder();
