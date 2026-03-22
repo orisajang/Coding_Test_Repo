@@ -5,47 +5,50 @@ namespace baek15649
 {
 	class Program
     {
+        static List<int> array = new List<int>();
         static StringBuilder sb = new StringBuilder();
-        static void func(List<int> used, List<int> numList, int depth)
+        static bool[] isVisited;
+        
+        static void Main()
         {
-            //처음에 0이 들어온다. numList는 숫자들 1~3
-            if(used.Count ==  depth)
+            int[] input = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+            
+            for(int i=0; i< input[0]; i++)
             {
-                for (int i = 0; i < used.Count; i++)
+                array.Add(i + 1);
+            }
+            isVisited = new bool[input[0]];
+            int[] result = new int[input[1]];
+            Func(0, input[1], result);
+            Console.WriteLine(sb.ToString());
+        }
+
+        static void Func(int depth, int maxDepth, int[] result)
+        {
+            if(depth == maxDepth)
+            {
+                for(int i=0; i < result.Length; i++)
                 {
-                    sb.Append(used[i]);
-                    if (i < used.Count - 1) sb.Append(' ');
+                    sb.Append(result[i]);
+                    if(i < result.Length -1 )
+                    {
+                        sb.Append(' ');
+                    }
                 }
                 sb.AppendLine();
                 return;
             }
-
-            //1이 들어있는상태, 2한다
-            for(int i=0; i< numList.Count; i++)
+            //계산식
+            for(int i=0; i< array.Count; i++)
             {
-                if (used.Contains(numList[i])) continue;
+                if (isVisited[i]) continue;
+                isVisited[i] = true;
+                result[depth] = array[i];
+                Func(depth + 1, maxDepth, result);
 
-                List<int> newUsed = new List<int>(used);
-                newUsed.Add(numList[i]);
-                func(newUsed,numList,depth);
+                //쓰고나서 할당 해제
+                isVisited[i] = false;
             }
-            
-        }
-    	public static void Main(string[] args)
-        {
-            //n개의 숫자. m개를 뽑는다
-            //1이 n번돌면서 자신이 아닐때만 한번 출력
-            List<int> usedList = new List<int>();
-            List<int> numList = new List<int>();
-
-            int[] inputArray = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
-
-            for(int i=0; i< inputArray[0]; i++)
-            {
-                numList.Add(i + 1);
-            }
-            func(usedList, numList, inputArray[1]);
-            Console.WriteLine(sb.ToString());
         }
     }
 }
