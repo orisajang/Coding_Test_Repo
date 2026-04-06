@@ -2,23 +2,25 @@ using System;
 
 public class Solution {
     public int[,] solution(int[,] arr1, int[,] arr2) {
+        //행렬의 곱셈 하는방법:
+        // 1 4      
+        // 3 2      3 3
+        // 4 1      3 3
         int lengthX = arr1.GetLength(0);
         int lengthY = arr1.GetLength(1);
-        int answerY = arr2.GetLength(1);
-        int[,] answer = new int[lengthX, answerY];
+        int arr2Length = arr2.GetLength(1);
+        int[,] answer = new int[lengthX,arr2Length];
         
-        for(int i=0; i< lengthX; i++)
+        for(int row=0; row < lengthX; row++)
         {
-            //arr2에서 돌아야함
-            for(int y=0; y < arr2.GetLength(1); y++)
+            for(int col=0; col < arr2Length; col++)
             {
                 int sum = 0;
-                for(int x=0; x<arr2.GetLength(0); x++)
+                for(int y=0; y < lengthY; y++)
                 {
-                    //arr1은??
-                    sum +=  (arr1[i, x] * arr2[x, y]);
+                    sum += (arr1[row,y] * arr2[y,col]);
                 }
-                answer[i, y] = sum;
+                answer[row,col] = sum;
             }
         }
         return answer;
