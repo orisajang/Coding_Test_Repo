@@ -38,7 +38,6 @@ public class Solution {
                 ch = strBuf.ToCharArray();
                 isFind = true;
             }
-            
             //ch를 다시 int형으로 바꾸기
             answer[i] = ChangeToInt(ch);
             
@@ -51,7 +50,7 @@ public class Solution {
         long sum = 0;
         for(int i=ch.Length-1; i >=0; i--)
         {
-            //여기서 현재 인덱스를 근야 계속 더하자
+            //여기서 현재 인덱스를 그냥 계속 더하자
             if(index ==0)
             {
                 index++;    
@@ -60,7 +59,6 @@ public class Solution {
             {
                 index *= 2;
             }
-            
             if(ch[i] == '1')
             {
                 sum += index;
@@ -71,11 +69,6 @@ public class Solution {
     
     private string Func(long num)
     {
-        //즉 1010이 됩니다
-        //10 - 0
-        //5 - 1
-        //2 - 0
-        //1
         if(num==0) return "0";
         
         StringBuilder sb = new StringBuilder();
@@ -85,7 +78,6 @@ public class Solution {
             num /= 2;
         }
         return new string(sb.ToString().Reverse().ToArray());
-        
     }
     
     
