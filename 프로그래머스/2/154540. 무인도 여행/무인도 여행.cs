@@ -72,7 +72,7 @@ public class Solution {
             
             if(IsVailed(currentX,currentY) && !visited[currentX,currentY])
             {
-                DFS(maps,visited,row+dx[i], col + dy[i]);
+                DFS(maps,visited,currentX, currentY);
             }
         }
     }
