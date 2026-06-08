@@ -5,50 +5,43 @@ public class Solution {
     int answer = -1;
     public int solution(int k, int[,] dungeons) {
         
-        //현재 피로도로 탐색할수있는 던전을 확인하자
-        //던전갯수와 실행횟수가 같다면 바로 종료 
-        //123, 132, 213, 231, ... 6개
-        //이거 isvisited로 처리해야할듯? DFS 처럼?
-        int currentRes = 0;
+        //DFS는? isVisited체크하면서 쭉쭉 내려가보자
         isVisited = new bool[dungeons.GetLength(0)];
-        Func(k,dungeons,0);
+        DFS(k,dungeons,0);
         
         return answer;
     }
-    private void Func(int k, int[,] dungeons, int count)
+    private void DFS(int k, int[,] dungeons, int count)
     {
-        int min= 0;
-        int somo = 0;
+        //하나씩 체크하면서 들어가야함 for문
         for(int i=0; i< dungeons.GetLength(0); i++)
         {
-            if(isVisited[i]) { continue; }
+            if(isVisited[i]) continue;
+            if(answer == dungeons.GetLength(0)) return;
             
+            int min = dungeons[i,0];
+            int somo = dungeons[i,1];
             
-            min = dungeons[i,0];
-            somo = dungeons[i,1];
-            
-            //만약 조건에 걸렸다면?
             if(k >= min)
             {
-               //계속 갑시다
+                //입장 가능 DFS가자
+                //만약 최대 result와 동일하다면 바로 끝내면됨
                 if(dungeons.GetLength(0) == count+1)
                 {
-                   //끝냅시다.
-                   answer = count+1;
-                   return;
-               }
+                    answer = count+1;
+                    return;
+                }
                 isVisited[i] = true;
-                Func(k-somo,dungeons,count+1);
+                DFS(k-somo, dungeons, count+1);
                 isVisited[i] = false;
             }
             else
             {
-                //끝
+                //더이상 갈수없음. 
                 if(count > answer) { answer = count; }
                 continue;
             }
+            
         }
-        
-        return;
     }
 }
