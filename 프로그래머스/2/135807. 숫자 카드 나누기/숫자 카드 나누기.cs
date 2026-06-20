@@ -13,24 +13,9 @@ public class Solution {
         }
         
         //바로 최대 공약수로 두번 체크해보자
-        bool isTrueA = true;
-        bool isTrueB = true;
-        for(int i=0; i< arrayA.Length; i++)
-        {
-            if(gcdB == 0 ||  arrayA[i] % gcdB == 0) 
-            {
-                isTrueA = false;
-                break;
-            }
-        }
-        for(int i=0; i< arrayB.Length; i++)
-        {
-            if(gcdA ==0 || arrayB[i] % gcdA == 0) 
-            {
-                isTrueB = false;
-                break;
-            }
-        }
+        bool isTrueA = CanUse(arrayA,gcdB);
+        bool isTrueB = CanUse(arrayB,gcdA);
+
         //조건문 체크한다음에 큰수 찾기
         if(isTrueA && isTrueB)
         {
@@ -50,9 +35,18 @@ public class Solution {
             answer = 0;
         }
         
-        
-        
         return answer;
+    }
+    private bool CanUse(int[] target, int gcd)
+    {
+        for(int i=0; i< target.Length; i++)
+        {
+            if(gcd == 0 ||  target[i] % gcd == 0) 
+            {
+                return false;
+            }
+        }
+        return true;
     }
     
     private int GCD(int a, int b)
