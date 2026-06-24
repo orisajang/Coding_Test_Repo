@@ -23,22 +23,18 @@ public class Solution {
         int minDiff = int.MaxValue;
         
         //딕셔너리에 정보가 있으므로 이제 하나씩 끊어보자.
-        foreach(int key in dict.Keys)
+        for(int i=0; i< wires.GetLength(0); i++)
         {
-            List<int> list = dict[key];
-            for(int i=0; i< list.Count; i++)
+            int num1 = wires[i,0];
+            int num2 = wires[i,1];
+            //두개의 연결을 끊고나서 연결된 모든 숫자를 확인해야하는데?
+            int res1 = Func(num1,num2, new HashSet<int>());
+            int res2 = n - res1;
+            int diff = (res1 - res2);
+            if(diff < 0) diff *= -1;
+            if(diff < minDiff)
             {
-                int num1 = key;
-                int num2 = list[i];
-                //두개의 연결을 끊고나서 연결된 모든 숫자를 확인해야하는데?
-                int res1 = Func(num1,num2, new HashSet<int>());
-                int res2 = n - res1;
-                int diff = (res1 - res2);
-                if(diff < 0) diff *= -1;
-                if(diff < minDiff)
-                {
-                    minDiff = diff;
-                }
+                minDiff = diff;
             }
         }
         return minDiff;
