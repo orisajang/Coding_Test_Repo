@@ -2,84 +2,111 @@ using System;
 using System.Collections.Generic;
 
 public class Solution {
-    int[] dx = new int[4] {-1,1,0,0};
-    int[] dy = new int[4] {0,0,-1,1};
+    int[] dx = new int[4]{-1,1,0,0};
+    int[] dy = new int[4]{0,0,-1,1};
     public int solution(string[] storage, string[] requests) {
         int answer = 0;
-        //requests를 체크하면서 1개가 나오면 지게차로, 2개면 그냥 해당되는거 전부 다 빼기
+        //다른방법. 외부 공기를 BFS로 만든다 (전체크기에서 외각을 감싸는 배열을 하나 만들자)
+        char[,] airArray = new char[storage.Length+2, storage[0].Length+2];
+        for(int i=0; i< airArray.GetLength(0); i++)
+        {
+            for(int j=0; j< airArray.GetLength(1); j++)
+            {
+                //외각은 전부 true, 나머지는 false로 만들어주자
+                if(i == 0 || j == 0 || 
+                   i == airArray.GetLength(0) - 1 || j == airArray.GetLength(1) - 1)
+                {
+                    airArray[i,j] = '.';
+                }
+                else
+                {
+                    airArray[i,j] = storage[i-1][j-1];
+                }
+            }
+        }
+        //답을 구해보자
         for(int i=0; i< requests.Length; i++)
         {
-            string str = requests[i];
-            if(str.Length == 1)
+            if(requests[i].Length == 1)
             {
-                bool[,] isVisited = new bool[storage.Length,storage[0].Length];
-                for(int row=0; row< storage.Length; row++)
+                //외각과 뚫려있으면 풀수있음. 단 이전에 빠진것들이 결과에 반영되면 안됨
+                //하기전에 공기 배열을 미리 만들어두자
+                Queue<(int,int)> que = new Queue<(int,int)>();
+                bool[,] isVisited = new bool[airArray.GetLength(0), airArray.GetLength(1)];
+                bool[,] outsideArray =new bool[airArray.GetLength(0), airArray.GetLength(1)];
+                que.Enqueue((0,0));
+                isVisited[0,0] = true;
+                while(que.Count > 0)
                 {
-                    char[] ch = storage[row].ToCharArray();
-                    for(int col = 0; col < storage[row].Length; col++)
+                    var (posX,posY) =  que.Dequeue();
+                    if(airArray[posX,posY] == '.')
                     {
-                        
-                        if(storage[row][col] != str[0]) continue;
-                        //현재위치에서 상하좌우 4방향에 대해 비어있는지, 및 방문 체크
-                        Queue<(int,int)> que = new Queue<(int,int)>();
-                        que.Enqueue((row,col));
-                        bool isPossible = false;
-                        bool[,] visited = new bool[storage.Length,storage[0].Length];
-                        while(que.Count > 0)
+                        outsideArray[posX,posY] = true;
+                        for(int idx=0; idx< dx.Length; idx++)
                         {
-                            var (posX,posY) = que.Dequeue();
-                            for(int idx = 0; idx < dx.Length; idx++)
+                            int curX = posX + dx[idx];
+                            int curY = posY + dy[idx];
+                            if(curX < 0 || curY < 0 || 
+                               curX >= airArray.GetLength(0) || curY >= airArray.GetLength(1))
                             {
-                                int curX = posX + dx[idx];
-                                int curY = posY + dy[idx];
-                                if(curX < 0 || curY < 0 || 
-                               curX >= storage.Length || curY >= storage[row].Length)
-                                {
-                                    //가능하다는거임
-                                    isPossible = true;
-                                    break;
-                                }
-                                //아니라면? BFS 추가 가능한지 체크를 해야함
-                                if(visited[curX,curY] || isVisited[curX,curY] || 
-                                  storage[curX][curY] != '0') continue;
-                                visited[curX,curY] = true;
-                                que.Enqueue((curX,curY));
+                                continue;
                             }
-                        }
-                        if(isPossible) 
-                        {
-                            ch[col] = '0';
-                            isVisited[row,col] = true;
+                            if(isVisited[curX,curY]) continue;
+                            isVisited[curX,curY] = true;
+                            que.Enqueue((curX,curY));
                         }
                     }
-                    storage[row] = new string(ch);
+                }
+                //공기 배열을 얻었음. 이제 상하좌우로 공기 배열이 있는지 체크하면된다.
+                for(int row = 1; row < airArray.GetLength(0)-1; row++)
+                {
+                    for(int col = 1; col < airArray.GetLength(1)-1; col++)
+                    {
+                        if(airArray[row,col] == requests[i][0])
+                        {
+                            //상하좌우에 공기가 있는지 체크
+                            for(int idx = 0; idx < dx.Length; idx++)
+                            {
+                                int curX = row + dx[idx];
+                                int curY = col + dy[idx];
+                                //무조건 1이랑 최대크기 -1범위니까 0체크 필요없다
+                                if(outsideArray[curX,curY])
+                                {
+                                    airArray[row,col] = '.';
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
             else
             {
-                //크레인으로 전부 다 뽑아버리자
-                for(int row=0; row< storage.Length; row++)
+                //그냥 다 뽑으면 됨
+                for(int row = 1; row < airArray.GetLength(0)-1; row++)
                 {
-                    char[] ch = storage[row].ToCharArray();
-                    for(int col = 0; col < storage[0].Length; col++)
+                    for(int col = 1; col < airArray.GetLength(1)-1; col++)
                     {
-                        if(storage[row][col] == str[0])
+                        if(airArray[row,col] == requests[i][0])
                         {
-                            ch[col] = '0';
+                            airArray[row,col] = '.';
                         }
                     }
-                    storage[row] = new string(ch);
                 }
             }
         }
-        //숫자를 세보자
-        for(int row = 0; row < storage.Length; row++)
+        //answer를 늘리자
+        for(int i=0; i< airArray.GetLength(0); i++)
         {
-            for(int col =0; col < storage[0].Length; col++)
+            for(int j= 0; j< airArray.GetLength(1); j++)
             {
-                if(storage[row][col] != '0') { answer++; }
+                if(airArray[i,j] != '.')
+                {
+                    answer++;
+                }
             }
         }
+        
         return answer;
     }
 }
